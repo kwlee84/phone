@@ -1,0 +1,11 @@
+<div>Header</div>
+
+@if(session.contains("user.id")) {
+	<a href="@routes.UserApp.logout()">Logout</a>
+} else {
+	<a href="@routes.UserApp.login()">Login</a>
+}
+
+@if(flash.contains("successmsg")) {
+	<div>@flash.get("successmsg")</div>
+}

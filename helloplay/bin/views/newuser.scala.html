@@ -1,0 +1,27 @@
+@(userForm: Form[User])
+
+@import helper._
+
+
+
+@main("Welcome to Play") {
+
+    <h1>New User</h1>
+
+	@form(action=routes.UserApp.newUser(), 'enctype -> "multipart/form-data") {
+		@inputText(userForm("userName"))
+		@inputText(userForm("email"))
+		@inputPassword(userForm("password"))
+		@inputPassword(userForm("confirmPassword"))
+		@inputDate(userForm("created"));
+		@inputFile(userForm("photo"))
+		@inputFile(userForm("photo2"))
+		<div>
+			<input type="submit" name="ok" value="create new user"/>
+		</div>
+	}
+	
+	
+	
+	
+}

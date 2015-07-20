@@ -1,0 +1,21 @@
+@(userForm: Form[User])
+
+@import helper._
+@implicitField = @{FieldConstructor(twitterBootstrapInput.render)}
+
+
+@main("Welcome to Play") {
+
+    <h1>New User</h1>
+
+	@form(action=routes.UserApp.editUser(),'class -> "form-horizontal") {
+		@inputText(userForm("userName"))
+		@inputText(userForm("email"))
+		@inputPassword(userForm("password"))
+		@inputPassword(userForm("confirmPassword"))
+		
+		<div>
+			<input type="submit" name="ok" value="edit user"/>
+		</div>
+	}
+}
