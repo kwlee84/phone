@@ -1,0 +1,9 @@
+@(message: String, accountForm: Form[Account])
+
+@main("Account List") {
+	<h3>Account List : @message</h3>
+	@form(action=routes.AccountApp.register()) {
+		
+	}
+	
+}
