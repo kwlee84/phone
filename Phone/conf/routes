@@ -9,3 +9,20 @@ GET     /                           controllers.Application.index()
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 GET		/accounts					controllers.AccountApp.index()
+POST	/account					controllers.AccountApp.register()
+POST	/account/delete				controllers.AccountApp.remove()
+
+
+
+
+
+#newForm 		get		/account/new
+#new			post	/account
+
+#list			get		/account
+#one			get		/account/:id
+
+#update			post	/account/edit
+#updateForm		get		/account/:id/edit
+
+#delete			post	/account/delete

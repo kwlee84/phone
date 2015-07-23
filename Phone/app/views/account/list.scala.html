@@ -1,9 +1,49 @@
-@(message: String, accountForm: Form[Account])
+@(accounts: List[Account], accountForm: Form[Account])
+
+@import helper._
 
 @main("Account List") {
-	<h3>Account List : @message</h3>
-	@form(action=routes.AccountApp.register()) {
+	
+	<h3>Account List</h3>
+	
+	<table>
+		<tr>
+			<th>계좌번호</th>
+			<th>은행</th>
+			<th>예금주</th>
+			<th></th>
+		</tr>
+			@for(account <- accounts) {
+				<tr>
+					<td>@account.getAccountNumber</td>
+					<td>@account.getBank</td>
+					<td>@account.getName</td>
+					<td><input type="button" value="삭제" onclick="removeAccount('@account.getAccountNumber')"/></td>
+				</tr>
+			}
+	</table>
+
+	@helper.form(action=routes.AccountApp.register(), 'method -> "post") {
+		@inputText(accountForm("accountNumber"))
+		@inputText(accountForm("bank"))
+		@inputText(accountForm("name"))
 		
+		<input type="submit" />
 	}
+	
+	@helper.form(action=routes.AccountApp.remove(), 'method -> "post", 'id -> "removeForm") {
+		<input type="hidden" id="del_accountNumber" name="accountNumber"/>
+	}
+	
+	<script type="text/javascript">
+		function removeAccount(accountNumber) {
+			if(!confirm(accountNumber + ' 계좌를 삭제할까요?')) {
+				return;
+			}
+			$('#del_accountNumber').val(accountNumber);
+			$('#removeForm').submit();
+		}
+	</script>
+	
 	
 }

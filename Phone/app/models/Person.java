@@ -1,4 +1,4 @@
-package kr.bartwars.phone.entity.domain;
+package models;
 
 public class Person {
 	

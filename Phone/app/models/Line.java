@@ -1,4 +1,4 @@
-package kr.bartwars.phone.entity.domain;
+package models;
 
 import java.util.Date;
 
