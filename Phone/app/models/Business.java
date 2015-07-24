@@ -1,9 +1,18 @@
 package models;
 
-public class Business {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import com.avaje.ebean.Model;
+
+@Entity
+public class Business extends Model{
 	
+	@Id
 	private Long id;
+	/** 회선유지비용 */
 	private Integer costOfMaintenace;
+	/** 단말기 판매가 */
 	private Integer sellingPrice;
 	
 	
@@ -25,7 +34,6 @@ public class Business {
 	public void setSellingPrice(Integer sellingPrice) {
 		this.sellingPrice = sellingPrice;
 	}
-	
 	public Integer getProfit() {
 		return this.sellingPrice - this.costOfMaintenace;
 	}

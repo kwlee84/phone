@@ -1,0 +1,29 @@
+@(lines: List[Line])
+
+@import helper._
+
+@main("Line List") {
+	
+	<h3>Line List</h3>
+	
+	<table>
+		<tr>
+			<th>회선번호</th>
+			<th>유심</th>
+			<th>계좌정보</th>
+		</tr>
+			@for(line <- lines) {
+				<tr>
+					<td>@line.getNumber1-@line.getNumber2-@line.getNumber3</td>
+					<td>@line.getUsim</td>
+					<td>@line.getAccount.getAccountNumber : @line.getAccount.getBank : @line.getAccount.getName</td>
+				</tr>
+			}
+	</table>
+
+	<a href="@routes.LineApp.registerForm()"/>신규</a>
+	<script type="text/javascript">
+	</script>
+	
+	
+}

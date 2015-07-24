@@ -12,8 +12,9 @@ GET		/accounts					controllers.AccountApp.index()
 POST	/account					controllers.AccountApp.register()
 POST	/account/delete				controllers.AccountApp.remove()
 
-
-
+GET		/lines						controllers.LineApp.index()
+GET		/line/new					controllers.LineApp.registerForm()
+POST	/line						controllers.LineApp.register()
 
 
 #newForm 		get		/account/new

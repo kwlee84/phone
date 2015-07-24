@@ -12,10 +12,10 @@ import play.mvc.*;
 import views.html.account.*;
 
 public class AccountApp extends Controller {
-
+	//
     public Result index() {
     	Form<Account> userForm = new Form<Account>(Account.class);
-    	Finder<String, Account> finder = new Finder<>(Account.class);
+    	Finder<String, Account> finder = new Finder<String, Account>(Account.class);
     	
     	List<Account> accounts = finder.all();
     	
@@ -37,11 +37,10 @@ public class AccountApp extends Controller {
     	DynamicForm requestData = Form.form().bindFromRequest();
     	String accountNumber = requestData.get("accountNumber");
     	
-    	Finder<String, Account> finder = new Finder<>(Account.class);
+    	Finder<String, Account> finder = new Finder<String, Account>(Account.class);
     	Account account = finder.byId(accountNumber);
     	account.delete();
     	
     	return redirect(routes.AccountApp.index());
     }
-
 }

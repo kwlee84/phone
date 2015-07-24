@@ -1,0 +1,43 @@
+@(accounts: List[Account], lineForm: Form[Line], payBackStyles: List[PayBackStyle])
+
+@import helper._
+
+@main("Account List") {
+	
+	<h3>Line List</h3>
+	
+	@helper.form(action=routes.LineApp.register(), 'enctype -> "multipart/form-data") {
+		@inputText(lineForm("number1"))
+		@inputText(lineForm("number2"))
+		@inputText(lineForm("number3"))
+		
+		@inputText(lineForm("usim"))
+		@inputDate(lineForm("joinDate"))
+		@inputDate(lineForm("keepPaySystemDate"))
+		@inputDate(lineForm("dutyPeriodDate"))
+		@inputDate(lineForm("cancelDate"))
+		<select name="payBackStyle">
+			@for(payBackStyle <- payBackStyles) {
+				<option value="@payBackStyle">@payBackStyle.getKrName</option>
+			}
+		</select>
+		@inputDate(lineForm("keepInstallmentDate"))
+		@inputDate(lineForm("payBackDate"))
+		@inputText(lineForm("businessInfo.costOfMaintenace"))
+		@inputText(lineForm("businessInfo.sellingPrice"))
+		
+		<select name="account.accountNumber">
+			@for(account <- accounts) {
+				<option value="@account.getAccountNumber">@account.getAccountNumber : @account.getBank : @account.getName</option>
+			}
+		</select>
+		
+		<input type="file" name="capture"/>
+		<input type="submit"/>
+	}
+	
+	<script type="text/javascript">
+	</script>
+	
+	
+}
