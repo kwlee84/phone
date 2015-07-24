@@ -6,12 +6,13 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
 scalaVersion := "2.11.6"
 
-resolvers += "Local Maven Repository" at "file:///Users/kiwanglee/Documents/Project/Phone/repository"
+#resolvers += "Local Maven Repository" at "file:///Users/kiwanglee/Documents/Project/Phone/repository"
 
 libraryDependencies ++= Seq(
   javaJdbc,
   cache,
-  javaWs
+  javaWs,
+  "commons-io" % "commons-io" % "2.4"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
