@@ -15,14 +15,13 @@ public class FileUtil {
 	public static File saveFile(File fromFile) {
 		//
 		//String path = Play.application().configuration().getString("fileUploadPath");
-		String path = Play.application().path().getPath();
+		String path = Play.application().path().getPath() + "\\data\\file\\";
 		File toFile = new File(path + DateFormatUtils.format(new Date(),"yyyyMMdd"), String.valueOf(System.currentTimeMillis()));
-		
-		/*try {
+		try {
 			FileUtils.moveFile(fromFile, toFile);
 		} catch (IOException e) {
 			throw new PhoneException("Failed to save file.");
-		}*/
+		}
 		
 		return toFile;
 	}

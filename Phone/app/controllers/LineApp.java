@@ -7,6 +7,7 @@ import java.util.List;
 import com.avaje.ebean.Model.Finder;
 
 import models.Account;
+import models.AttachedFile;
 import models.Line;
 import models.PayBackStyle;
 import play.*;
@@ -37,13 +38,15 @@ public class LineApp extends Controller {
     public Result register() {
     	Form<Line> lineForm = Form.form(Line.class).bindFromRequest();
     	Line line = lineForm.get();
-    	line.insert();
     	MultipartFormData body = request().body().asMultipartFormData();
     	FilePart filePart = body.getFile("capture");
     	if (filePart != null) {
     		File file = FileUtil.saveFile(filePart.getFile());
-    		
+    		AttachedFile captureFile = new AttachedFile(file.getPath(), filePart.getFilename(), filePart.getContentType());
+    		captureFile.insert();
+    		line.setCaptureFile(captureFile);
     	}
+    	line.insert();
         return redirect(routes.LineApp.index());
     }
     

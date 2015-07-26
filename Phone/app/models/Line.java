@@ -53,6 +53,7 @@ public class Line extends Model {
 	@ManyToOne
 	private Account account;
 	
+	private AttachedFile captureFile;
 	
 	
 	public Long getId() {
@@ -150,6 +151,12 @@ public class Line extends Model {
 	}
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+	public AttachedFile getCaptureFile() {
+		return captureFile;
+	}
+	public void setCaptureFile(AttachedFile captureFile) {
+		this.captureFile = captureFile;
 	}
 	
 }
