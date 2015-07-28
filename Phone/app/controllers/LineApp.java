@@ -51,7 +51,8 @@ public class LineApp extends Controller {
     }
     
     public Result show(String id) {
-    	Line line = Ebean.find(Line.class, id);
+    	//Line line = Ebean.find(Line.class, id);
+    	Line line = new Finder<String, Line>(Line.class).fetch("").findUnique();
     	return ok(show.render(line));
     }
     

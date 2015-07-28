@@ -31,7 +31,7 @@ public class LoginApp extends Controller {
     	User user = User.findUserByEmailAndPassword(bindedForm.get("email"), bindedForm.get("password"));
     	
     	if(user == null) {
-    		return unauthorized();
+    		return unauthorized(unauthorized.render());
     	}
     	
     	String authToken = user.createAuthToken();
@@ -45,11 +45,9 @@ public class LoginApp extends Controller {
     public Result logout() {
     	//
     	//response().discardCookie(AUTH_TOKEN);
+    	User.findByAuthToken(session().get("authToken")).deleteAuthToken();
     	session().remove("authToken");
     	session().remove("email");
-    	
-    	
-    	User.findByAuthToken(session().get("authToken")).deleteAuthToken();
     	
     	return redirect(routes.LoginApp.login());
     	

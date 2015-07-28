@@ -19,6 +19,8 @@
 		<dt>할부금 완납여부</dt><dd>@line.isPayInstallmentYn</dd>
 		<dt>PB 확인여부</dt><dd>@line.isCheckPaybackYn</dd>
 		<dt>납부계좌</dt><dd>@line.getAccount.getAccountNumber : @line.getAccount.getBank : @line.getAccount.getName</dd>
+		<dt>판매금액</dt><dd>@line.getBusinessInfo.getSellingPrice</dd>
+		<dt>유지비</dt><dd>@line.getBusinessInfo.getCostOfMaintenace</dd>
 		<dt>조건캡쳐본</dt><dd><img alt="" src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)" width="20%" height="20%"></dd>
 	</dl>
 	<a href="@routes.LineApp.index()"/>목록</a>

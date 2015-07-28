@@ -52,6 +52,7 @@ public class User extends Model {
 	public static User find(String id) {
 		return finder.byId(id);
 	}
+	
 	public static User findUserByEmailAndPassword(String email, String password) {
 		//
 		if(User.find("1") == null) {

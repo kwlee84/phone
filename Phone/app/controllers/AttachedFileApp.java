@@ -7,7 +7,9 @@ import com.avaje.ebean.Ebean;
 import models.AttachedFile;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security.Authenticated;
 
+@Authenticated(Secured.class)
 public class AttachedFileApp extends Controller {
 	//
 	public Result download(String id) {

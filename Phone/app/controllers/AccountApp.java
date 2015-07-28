@@ -9,8 +9,10 @@ import play.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
+import play.mvc.Security.Authenticated;
 import views.html.account.*;
 
+@Authenticated(Secured.class)
 public class AccountApp extends Controller {
 	//
     public Result index() {
