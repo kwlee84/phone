@@ -9,17 +9,17 @@ import com.avaje.ebean.Model;
 public class Business extends Model{
 	
 	@Id
-	private Long id;
+	private String id;
 	/** 회선유지비용 */
 	private Integer costOfMaintenace;
 	/** 단말기 판매가 */
 	private Integer sellingPrice;
 	
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public Integer getCostOfMaintenace() {

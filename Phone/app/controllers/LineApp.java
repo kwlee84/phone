@@ -4,42 +4,42 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avaje.ebean.Model.Finder;
-
 import models.Account;
 import models.AttachedFile;
 import models.Line;
 import models.PayBackStyle;
-import play.*;
-import play.data.DynamicForm;
 import play.data.Form;
-import play.mvc.*;
-import play.mvc.Http.MultipartFormData;
+import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
 import util.FileUtil;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Model.Finder;
+
 import views.html.line.*;
 
+@Authenticated(Secured.class)
 public class LineApp extends Controller {
 
+	
     public Result index() {
-    	Finder<String, Line> finder = new Finder<String, Line>(Line.class);
-    	List<Line> lines = finder.fetch("account").findList();
-    	
+    	List<Line> lines = Ebean.find(Line.class).fetch("account").fetch("captureFile").findList();
     	return ok(list.render(lines));
     }
     
     public Result registerForm() {
-    	Finder<String, Account> finder = new Finder<String, Account>(Account.class);
-    	List<Account> accounts = finder.all();
+    	//http://www.avaje.org/ebean/introquery_joinquery.html 참고
+    	List<Account> accounts = Ebean.find(Account.class).findList();
     	Form<Line> lineForm = new Form<Line>(Line.class);
-        return ok(newForm.render(accounts, lineForm, PayBackStyle.valuesAsList()));
+    	List<PayBackStyle> PayBackStyles = PayBackStyle.valuesAsList();
+        return ok(newForm.render(accounts, lineForm, PayBackStyles));
     }
     
     public Result register() {
-    	Form<Line> lineForm = Form.form(Line.class).bindFromRequest();
-    	Line line = lineForm.get();
-    	MultipartFormData body = request().body().asMultipartFormData();
-    	FilePart filePart = body.getFile("capture");
+		Line line = Form.form(Line.class).bindFromRequest().get();
+    	FilePart filePart = request().body().asMultipartFormData().getFile("capture");
     	if (filePart != null) {
     		File file = FileUtil.saveFile(filePart.getFile());
     		AttachedFile captureFile = new AttachedFile(file.getPath(), filePart.getFilename(), filePart.getContentType());
@@ -50,22 +50,21 @@ public class LineApp extends Controller {
         return redirect(routes.LineApp.index());
     }
     
-    /*public static Result registerByImage() {
-    	//
-    	Form<ExamPaperCdo> examPaperForm = Form.form(ExamPaperCdo.class);
-        ExamPaperCdo cdo = examPaperForm.bindFromRequest().get();
-        
-        MultipartFormData body = request().body().asMultipartFormData();
-		for(FilePart filePart : body.getFiles()) {
-			if (filePart != null) {
-				File file = FileUtil.saveFile(filePart.getFile());
-		        DCAttachedFile attachedFile = new DCAttachedFile(file.getPath(), filePart.getFilename(), filePart.getContentType());
-				String fileUrl = attachedFileService.registerAttachedFile(attachedFile);
-				cdo.addAttachedFileUrl(fileUrl);
-	        }
-		}
-		String paperUsid = examPaperService.registerExamPaper(cdo);
-        return redirect("/");
-    }*/
+    public Result show(String id) {
+    	Line line = Ebean.find(Line.class, id);
+    	return ok(show.render(line));
+    }
+    
+    public Result editForm(String id) {
+    	return TODO;
+    }
+    
+    public Result edit() {
+    	return TODO;
+    }
+    
+    public Result remove() {
+    	return TODO;
+    }
     
 }

@@ -8,14 +8,24 @@ GET     /                           controllers.Application.index()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET		/accounts					controllers.AccountApp.index()
-POST	/account					controllers.AccountApp.register()
-POST	/account/delete				controllers.AccountApp.remove()
+GET     /accounts					controllers.AccountApp.index()
+POST    /account					controllers.AccountApp.register()
+POST    /account/delete				controllers.AccountApp.remove()
 
-GET		/lines						controllers.LineApp.index()
-GET		/line/new					controllers.LineApp.registerForm()
-POST	/line						controllers.LineApp.register()
+GET     /lines						controllers.LineApp.index()
+GET     /line/new					controllers.LineApp.registerForm()
+POST    /line						controllers.LineApp.register()
+GET     /line/:id					controllers.LineApp.show(id)
+GET     /line/:id/edit				controllers.LineApp.editForm(id)
+POST    /line/edit					controllers.LineApp.edit()
+POST    /line/delete				controllers.LineApp.remove()
 
+GET     /login						controllers.LoginApp.loginForm()
+POST    /login						controllers.LoginApp.login()
+
+GET     /logout						controllers.LoginApp.logout()
+
+GET     /attachedfile/:id			controllers.AttachedFileApp.download(id)
 
 #newForm 		get		/account/new
 #new			post	/account

@@ -9,7 +9,7 @@ import com.avaje.ebean.Model;
 public class AttachedFile extends Model {
 	//
     @Id
-    private Long id;
+    private String id;
 	private String path;
 	private String fileName;
 	private String contentType;
@@ -21,10 +21,10 @@ public class AttachedFile extends Model {
 		this.contentType = contentType;
 	}
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getPath() {

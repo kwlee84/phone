@@ -38,8 +38,7 @@ public class AccountApp extends Controller {
     	String accountNumber = requestData.get("accountNumber");
     	
     	Finder<String, Account> finder = new Finder<String, Account>(Account.class);
-    	Account account = finder.byId(accountNumber);
-    	account.delete();
+    	finder.byId(accountNumber).delete();
     	
     	return redirect(routes.AccountApp.index());
     }

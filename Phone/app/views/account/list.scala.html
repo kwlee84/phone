@@ -23,7 +23,7 @@
 			}
 	</table>
 
-	@helper.form(action=routes.AccountApp.register(), 'method -> "post") {
+	@form(action=routes.AccountApp.register(), 'method -> "post") {
 		@inputText(accountForm("accountNumber"))
 		@inputText(accountForm("bank"))
 		@inputText(accountForm("name"))
@@ -31,7 +31,7 @@
 		<input type="submit" />
 	}
 	
-	@helper.form(action=routes.AccountApp.remove(), 'method -> "post", 'id -> "removeForm") {
+	@form(action=routes.AccountApp.remove(), 'method -> "post", 'id -> "removeForm") {
 		<input type="hidden" id="del_accountNumber" name="accountNumber"/>
 	}
 	

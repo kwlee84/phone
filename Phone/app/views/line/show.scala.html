@@ -1,0 +1,29 @@
+@(line: Line)
+
+@import helper._
+
+@main("Line Show") {
+	
+	<h3>Line Show</h3>
+	
+	<dl>
+		<dt>전화번호</dt><dd>@line.getNumber1-@line.getNumber2-@line.getNumber3</dd>
+		<dt>유심번호</dt><dd>@line.getUsim</dd>
+		<dt>가입일</dt><dd>@line.getJoinDate</dd>
+		<dt>요금제변경가능일</dt><dd>@line.getKeepPaySystemDate</dd>
+		<dt>해지가능일</dt><dd>@line.getDutyPeriodDate</dd>
+		<dt>해지일</dt><dd>@line.getCancelDate</dd>
+		<dt>PB 지급방식</dt><dd>@line.getPayBackStyle</dd>
+		<dt>할부중도완납가능일</dt><dd>@line.getKeepInstallmentDate</dd>
+		<dt>PB 입금예정일</dt><dd>@line.getPayBackDate</dd>
+		<dt>할부금 완납여부</dt><dd>@line.isPayInstallmentYn</dd>
+		<dt>PB 확인여부</dt><dd>@line.isCheckPaybackYn</dd>
+		<dt>납부계좌</dt><dd>@line.getAccount.getAccountNumber : @line.getAccount.getBank : @line.getAccount.getName</dd>
+		<dt>조건캡쳐본</dt><dd><img alt="" src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)" width="20%" height="20%"></dd>
+	</dl>
+	<a href="@routes.LineApp.index()"/>목록</a>
+	<script type="text/javascript">
+	</script>
+	
+	
+}

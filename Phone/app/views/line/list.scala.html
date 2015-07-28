@@ -6,17 +6,19 @@
 	
 	<h3>Line List</h3>
 	
-	<table>
+	<table border="1">
 		<tr>
 			<th>회선번호</th>
 			<th>유심</th>
 			<th>계좌정보</th>
+			<th>사진</th>
 		</tr>
 			@for(line <- lines) {
 				<tr>
-					<td>@line.getNumber1-@line.getNumber2-@line.getNumber3</td>
+					<td><a href="@routes.LineApp.show(line.getId)">@line.getNumber1-@line.getNumber2-@line.getNumber3</a></td>
 					<td>@line.getUsim</td>
 					<td>@line.getAccount.getAccountNumber : @line.getAccount.getBank : @line.getAccount.getName</td>
+					<td><img alt="" src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)" width="20%" height="20%"></td>
 				</tr>
 			}
 	</table>

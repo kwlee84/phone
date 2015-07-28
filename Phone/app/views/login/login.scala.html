@@ -1,0 +1,19 @@
+
+@import helper._
+
+@main("Login") {
+	
+	<h3>Login</h3>
+	
+	@form(action=routes.LoginApp.login(), 'method -> "post") {
+		<dl>
+			<dt>email</dt><dd><input type="text" name="email"></dd>
+			<dt>password</dt><dd><input type="password" name="password"></dd>
+		</dl>
+		<input type="submit"/>
+	}
+	
+	<script type="text/javascript">
+	</script>
+	
+}

@@ -8,7 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import org.hibernate.validator.constraints.Length;
+import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.Required;
 
 import com.avaje.ebean.Model;
 
@@ -16,26 +17,34 @@ import com.avaje.ebean.Model;
 public class Line extends Model {
 
 	@Id
-	private Long id;
+	private String id;
 	
-	@Length(max=4)
+	@Required
 	@Column(name="number_1")
+	@MaxLength(4)
 	private String number1;
-	@Length(max=4)
+	@Required
 	@Column(name="number_2")
+	@MaxLength(4)
 	private String number2;
-	@Length(max=4)
+	@Required
 	@Column(name="number_3")
+	@MaxLength(4)
 	private String number3;
 	
+	@Required
 	private String usim;
 	/** 가입일 */
+	@Required
 	private Date joinDate;
 	/** 요금제변경가능일 */
+	@Required
 	private Date keepPaySystemDate;
 	/** 해지가능일 */
+	@Required
 	private Date dutyPeriodDate;
 	/** 해지일 */
+	@Required
 	private Date cancelDate;
 	/** PB 지급방식 */
 	private PayBackStyle payBackStyle;
@@ -50,16 +59,17 @@ public class Line extends Model {
 	@OneToOne
 	private Business businessInfo;
 	/** 납부계좌 */
+	@Required
 	@ManyToOne
 	private Account account;
-	
+	@OneToOne
 	private AttachedFile captureFile;
 	
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getNumber1() {
