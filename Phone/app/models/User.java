@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.avaje.ebean.Model;
 
@@ -20,7 +21,7 @@ public class User extends Model {
 	private String id;
 	@Column(unique = true, nullable = false)
 	private String email;
-	//TODO DB에 저장되지 않도록 설정
+	@Transient
 	private String password;
 	private String name;
 	private String authToken;

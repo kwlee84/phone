@@ -1,12 +1,22 @@
-@(accounts: List[Account], lineForm: Form[Line], payBackStyles: List[PayBackStyle])
+@(accounts: List[Account], lineForm: Form[Line], payBackStyles: List[PayBackStyle], persons: List[Person])
 
 @import helper._
 
-@main("Account List") {
+@main("Line Register") {
 	
-	<h3>Line List</h3>
+	<h3>Line Register</h3>
 	
 	@helper.form(action=routes.LineApp.register(), 'enctype -> "multipart/form-data") {
+		<dl>
+			<dt>명의자</dt>
+			<dd>
+				<select name="person.id">
+				@for(person <- persons) {
+					<option value="@person.getId">@person.getName</option>
+				}
+				</select>
+			</dd>
+		</dl>
 		@inputText(lineForm("number1"))
 		@inputText(lineForm("number2"))
 		@inputText(lineForm("number3"))

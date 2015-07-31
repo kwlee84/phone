@@ -1,0 +1,43 @@
+@(persons: List[Person], personForm: Form[Person])
+
+@import helper._
+
+@main("Person List") {
+	
+	<h3>Person List</h3>
+	
+	<table>
+		<tr>
+			<th>이름</th>
+			<th></th>
+		</tr>
+			@for(person <- persons) {
+				<tr>
+					<td>@person.getName</td>
+					<td><input type="button" value="삭제" onclick="removePerson('@person.getId')"/></td>
+				</tr>
+			}
+	</table>
+
+	@form(action=routes.PersonApp.register(), 'method -> "post") {
+		@inputText(personForm("name"))
+		
+		<input type="submit" />
+	}
+	
+	@form(action=routes.PersonApp.remove(), 'method -> "post", 'id -> "removeForm") {
+		<input type="hidden" id="del_person_id" name="id"/>
+	}
+	
+	<script type="text/javascript">
+		function removePerson(id) {
+			if(!confirm('명의자를 삭제할까요?')) {
+				return;
+			}
+			$('#del_person_id').val(id);
+			$('#removeForm').submit();
+		}
+	</script>
+	
+	
+}

@@ -17,8 +17,16 @@
 				<tr>
 					<td><a href="@routes.LineApp.show(line.getId)">@line.getNumber1-@line.getNumber2-@line.getNumber3</a></td>
 					<td>@line.getUsim</td>
-					<td>@line.getAccount.getAccountNumber : @line.getAccount.getBank : @line.getAccount.getName</td>
-					<td><img alt="" src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)" width="20%" height="20%"></td>
+					<td>
+						@if(line.getAccount != null) {
+							@line.getAccount.getAccountNumber : @line.getAccount.getBank : @line.getAccount.getName
+						}
+					</td>
+					<td>
+						@if(line.getCaptureFile != null) {
+							<img alt="" src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)" width="20%" height="20%">
+						}
+					</td>
 				</tr>
 			}
 	</table>

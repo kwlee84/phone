@@ -17,30 +17,33 @@ public class AccountApp extends Controller {
 	//
     public Result index() {
     	Form<Account> userForm = new Form<Account>(Account.class);
-    	Finder<String, Account> finder = new Finder<String, Account>(Account.class);
     	
-    	List<Account> accounts = finder.all();
+    	List<Account> accounts = Account.findAll();
     	
         return ok(list.render(accounts, userForm));
     }
     
     public Result register() {
     	//
-    	Form<Account> userForm = Form.form(Account.class).bindFromRequest();
+    	Form<Account> accountForm = Form.form(Account.class).bindFromRequest();
     	
-    	Account account = userForm.get();
+    	if(accountForm.hasErrors()){
+			Logger.debug(accountForm.errorsAsJson().toString());
+			return badRequest();
+		}
+    	
+    	Account account = accountForm.get();
     	account.insert();
     	
     	return redirect(routes.AccountApp.index());
     }
-    
+
     public Result remove() {
     	//
     	DynamicForm requestData = Form.form().bindFromRequest();
     	String accountNumber = requestData.get("accountNumber");
     	
-    	Finder<String, Account> finder = new Finder<String, Account>(Account.class);
-    	finder.byId(accountNumber).delete();
+    	Account.find(accountNumber).delete();
     	
     	return redirect(routes.AccountApp.index());
     }

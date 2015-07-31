@@ -1,7 +1,9 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,9 +18,13 @@ import com.avaje.ebean.Model;
 @Entity
 public class Line extends Model {
 
+	private static Finder<String, Line> finder = new Finder<String, Line>(Line.class);
+	
 	@Id
 	private String id;
-	
+	/** 명의자 */
+	@ManyToOne
+	private Person person;
 	@Required
 	@Column(name="number_1")
 	@MaxLength(4)
@@ -56,16 +62,47 @@ public class Line extends Model {
 	private boolean payInstallmentYn;
 	/** 페이백 확인여부 */
 	private boolean checkPaybackYn;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Business businessInfo;
 	/** 납부계좌 */
-	@Required
 	@ManyToOne
 	private Account account;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private AttachedFile captureFile;
 	
+	public static Line find(String id) {
+		return finder.byId(id);
+	}
 	
+	public static List<Line> findAll() {
+		return finder.all();
+	}
+	
+	public static Line setUpdatedValues(String id, Line param) {
+		//
+		Line line = Line.find(id);
+		line.setNumber1(param.getNumber1());
+		line.setNumber2(param.getNumber2());
+		line.setNumber3(param.getNumber3());
+		line.setCancelDate(param.getCancelDate());
+		line.setCheckPaybackYn(param.isCheckPaybackYn());
+		line.setDutyPeriodDate(param.getDutyPeriodDate());
+		line.setJoinDate(param.getJoinDate());
+		line.setKeepInstallmentDate(param.getKeepInstallmentDate());
+		line.setKeepPaySystemDate(param.getKeepPaySystemDate());
+		line.setPayBackDate(param.getPayBackDate());
+		line.setPayBackStyle(param.getPayBackStyle());
+		line.setPayInstallmentYn(param.isPayInstallmentYn());
+		line.setUsim(param.getUsim());
+		if(param.getAccount() == null || param.getAccount().getAccountNumber().isEmpty()) {
+			line.setAccount(null);
+		} else {
+			line.setAccount(param.getAccount());
+		}
+		//setBusinessInfo(param.businessInfo);
+		//setCaptureFile(param.getCaptureFile());
+		return line;
+	}
 	public String getId() {
 		return id;
 	}
@@ -167,6 +204,12 @@ public class Line extends Model {
 	}
 	public void setCaptureFile(AttachedFile captureFile) {
 		this.captureFile = captureFile;
+	}
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 	
 }

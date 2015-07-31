@@ -8,6 +8,8 @@ import models.Account;
 import models.AttachedFile;
 import models.Line;
 import models.PayBackStyle;
+import models.Person;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -25,16 +27,16 @@ public class LineApp extends Controller {
 
 	
     public Result index() {
-    	List<Line> lines = Ebean.find(Line.class).fetch("account").fetch("captureFile").findList();
+    	List<Line> lines = Line.findAll();
     	return ok(list.render(lines));
     }
     
     public Result registerForm() {
-    	//http://www.avaje.org/ebean/introquery_joinquery.html 참고
-    	List<Account> accounts = Ebean.find(Account.class).findList();
+    	List<Account> accounts = Account.findAll();
     	Form<Line> lineForm = new Form<Line>(Line.class);
-    	List<PayBackStyle> PayBackStyles = PayBackStyle.valuesAsList();
-        return ok(newForm.render(accounts, lineForm, PayBackStyles));
+    	List<PayBackStyle> payBackStyles = PayBackStyle.valuesAsList();
+    	List<Person> persons = Person.findAll();
+        return ok(newForm.render(accounts, lineForm, payBackStyles, persons));
     }
     
     public Result register() {
@@ -43,29 +45,45 @@ public class LineApp extends Controller {
     	if (filePart != null) {
     		File file = FileUtil.saveFile(filePart.getFile());
     		AttachedFile captureFile = new AttachedFile(file.getPath(), filePart.getFilename(), filePart.getContentType());
-    		captureFile.insert();
     		line.setCaptureFile(captureFile);
     	}
     	line.insert();
+    	
         return redirect(routes.LineApp.index());
     }
     
     public Result show(String id) {
-    	//Line line = Ebean.find(Line.class, id);
-    	Line line = new Finder<String, Line>(Line.class).fetch("").findUnique();
+    	Line line = Line.find(id);
     	return ok(show.render(line));
     }
     
     public Result editForm(String id) {
-    	return TODO;
+    	List<Account> accounts = Account.findAll();
+    	Form<Line> lineForm = new Form<Line>(Line.class);
+    	List<PayBackStyle> payBackStyles = PayBackStyle.valuesAsList();
+    	lineForm = lineForm.fill(Line.find(id));
+    	
+    	return ok(editForm.render(lineForm, accounts, payBackStyles));
     }
     
     public Result edit() {
-    	return TODO;
+    	Line line = Form.form(Line.class).bindFromRequest().get();
+    	Line.setUpdatedValues(line.getId(), line).save();
+    	
+    	return redirect(routes.LineApp.show(line.getId()));
     }
     
     public Result remove() {
-    	return TODO;
+    	DynamicForm requestData = Form.form().bindFromRequest();
+    	String id = requestData.get("id");
+    	
+    	Line.find(id).delete();
+    	
+    	return redirect(routes.LineApp.index());
     }
-    
+    /**
+     * TODO 
+     * 회선 검색기능
+     * 첨부파일 수정기능
+     */
 }
