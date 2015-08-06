@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 
 import com.avaje.ebean.Ebean;
 
@@ -12,11 +13,12 @@ import play.mvc.Security.Authenticated;
 @Authenticated(Secured.class)
 public class AttachedFileApp extends Controller {
 	//
-	public Result download(String id) {
+	public Result download(String id) throws UnsupportedEncodingException {
     	//
 		AttachedFile attachedFile = Ebean.find(AttachedFile.class, id);
 		response().setContentType(attachedFile.getContentType());  
-		response().setHeader("Content-disposition","attachment; filename=" + attachedFile.getFileName()); 
+		String fileName = new String(attachedFile.getFileName().getBytes("UTF-8"), "ISO-8859-1");
+		response().setHeader("Content-disposition","attachment; filename=" + fileName);
 		return ok(new File(attachedFile.getPath()));
     }
 
