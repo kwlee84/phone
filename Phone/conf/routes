@@ -27,6 +27,10 @@ GET     /logout						controllers.LoginApp.logout()
 
 GET     /attachedfile/:id			controllers.AttachedFileApp.download(id)
 
+GET     /persons                     controllers.PersonApp.index()
+POST    /person                      controllers.PersonApp.register()
+POST    /person/delete               controllers.PersonApp.remove()
+
 #newForm 		get		/account/new
 #new			post	/account
 
