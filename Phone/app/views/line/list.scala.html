@@ -1,18 +1,31 @@
-@(lines: List[Line])
+@(lines: List[Line], persons: List[Person], personId: String)
 
 @import helper._
 
 @main("Line List") {
-	
-	<h3>Line List</h3>
-	
-	<table border="1">
-		<tr>
-			<th>회선번호</th>
-			<th>유심</th>
-			<th>계좌정보</th>
-			<th>사진</th>
-		</tr>
+	<div class="container theme-showcase" role="main">
+		<div class="page-header">
+        	<h1>회선목록</h1>
+		</div>
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" @if(personId == null){class="active"}><a href="@routes.LineApp.index()">전체</a></li>
+			@for(person <- persons) {
+				<li role="presentation" @if(personId == person.getId){class="active"}><a href="@routes.LineApp.index()?personId=@person.getId">@person.getName</a></li>
+			}
+		</ul>
+		<table class="table table-striped">
+            <thead>
+              <tr>
+                <th>회선번호</th>
+				<th>유심</th>
+				<th>계좌정보</th>
+				<th>해지여부</th>
+              </tr>
+            </thead>
+            <tbody>
+            @if(lines.size == 0 ) {
+            	<!-- <tr><td colspan="4">없음</td></tr> -->
+            }
 			@for(line <- lines) {
 				<tr>
 					<td><a href="@routes.LineApp.show(line.getId)">@line.getNumber1-@line.getNumber2-@line.getNumber3</a></td>
@@ -22,18 +35,13 @@
 							@line.getAccount.getAccountNumber : @line.getAccount.getBank : @line.getAccount.getName
 						}
 					</td>
-					<td>
-						@if(line.getCaptureFile != null) {
-							<img alt="" src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)" width="20%" height="20%">
-						}
-					</td>
+					<td></td>
 				</tr>
 			}
-	</table>
-
-	<a href="@routes.LineApp.registerForm()"/>신규</a>
+            </tbody>
+		</table>
+		<a type="button" href="@routes.LineApp.registerForm()" class="btn btn-primary">신규</a>
+	</div>
 	<script type="text/javascript">
 	</script>
-	
-	
 }

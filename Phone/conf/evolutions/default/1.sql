@@ -27,6 +27,7 @@ create table business (
 
 create table line (
   id                        varchar(255) not null,
+  person_id                 varchar(255),
   number_1                  varchar(255),
   number_2                  varchar(255),
   number_3                  varchar(255),
@@ -49,10 +50,15 @@ create table line (
   constraint pk_line primary key (id))
 ;
 
+create table person (
+  id                        varchar(255) not null,
+  name                      varchar(255),
+  constraint pk_person primary key (id))
+;
+
 create table user (
   id                        varchar(255) not null,
   email                     varchar(255) not null,
-  password                  varchar(255),
   name                      varchar(255),
   auth_token                varchar(255),
   sha_password              varbinary(255),
@@ -68,14 +74,18 @@ create sequence business_seq;
 
 create sequence line_seq;
 
+create sequence person_seq;
+
 create sequence user_seq;
 
-alter table line add constraint fk_line_businessInfo_1 foreign key (business_info_id) references business (id) on delete restrict on update restrict;
-create index ix_line_businessInfo_1 on line (business_info_id);
-alter table line add constraint fk_line_account_2 foreign key (account_account_number) references account (account_number) on delete restrict on update restrict;
-create index ix_line_account_2 on line (account_account_number);
-alter table line add constraint fk_line_captureFile_3 foreign key (capture_file_id) references attached_file (id) on delete restrict on update restrict;
-create index ix_line_captureFile_3 on line (capture_file_id);
+alter table line add constraint fk_line_person_1 foreign key (person_id) references person (id) on delete restrict on update restrict;
+create index ix_line_person_1 on line (person_id);
+alter table line add constraint fk_line_businessInfo_2 foreign key (business_info_id) references business (id) on delete restrict on update restrict;
+create index ix_line_businessInfo_2 on line (business_info_id);
+alter table line add constraint fk_line_account_3 foreign key (account_account_number) references account (account_number) on delete restrict on update restrict;
+create index ix_line_account_3 on line (account_account_number);
+alter table line add constraint fk_line_captureFile_4 foreign key (capture_file_id) references attached_file (id) on delete restrict on update restrict;
+create index ix_line_captureFile_4 on line (capture_file_id);
 
 
 
@@ -91,6 +101,8 @@ drop table if exists business;
 
 drop table if exists line;
 
+drop table if exists person;
+
 drop table if exists user;
 
 SET REFERENTIAL_INTEGRITY TRUE;
@@ -102,6 +114,8 @@ drop sequence if exists attached_file_seq;
 drop sequence if exists business_seq;
 
 drop sequence if exists line_seq;
+
+drop sequence if exists person_seq;
 
 drop sequence if exists user_seq;
 

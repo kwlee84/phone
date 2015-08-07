@@ -53,4 +53,15 @@ public class LoginApp extends Controller {
     	
     }
     
+    public Result template() {
+    	//
+    	//response().discardCookie(AUTH_TOKEN);
+    	User.findByAuthToken(session().get("authToken")).deleteAuthToken();
+    	session().remove("authToken");
+    	session().remove("email");
+    	
+    	return ok(template.render());
+    	
+    }
+    
 }

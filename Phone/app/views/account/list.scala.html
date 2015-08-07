@@ -3,47 +3,64 @@
 @import helper._
 
 @main("Account List") {
+<div class="container theme-showcase" role="main">
+	<div class="page-header">
+        <h1>계좌관리</h1>
+	</div>
 	
-	<h3>Account List</h3>
-	
-	<table>
+	<table class="table table-striped">
+		<thead>
 		<tr>
 			<th>계좌번호</th>
 			<th>은행</th>
 			<th>예금주</th>
 			<th></th>
 		</tr>
+		</thead>
+		<tbody>
 			@for(account <- accounts) {
 				<tr>
 					<td>@account.getAccountNumber</td>
 					<td>@account.getBank</td>
 					<td>@account.getName</td>
-					<td><input type="button" value="삭제" onclick="removeAccount('@account.getAccountNumber')"/></td>
+					<td><input class="btn btn-xs btn-danger" type="button" value="삭제" onclick="removeAccount('@account.getAccountNumber')"/></td>
 				</tr>
 			}
-	</table>
-
+		</tbody>
+	</table><br>
 	@form(action=routes.AccountApp.register(), 'method -> "post") {
-		@inputText(accountForm("accountNumber"))
-		@inputText(accountForm("bank"))
-		@inputText(accountForm("name"))
-		
-		<input type="submit" />
+		<div class="row">
+			<div class="form-group col-xs-12 col-md-4">
+				<label class="col-xs-4 control-label">계좌번호</label>
+				<div class="col-xs-8"><input type="text" class="form-control" name="accountNumber"></div>
+			</div>
+			<div class="form-group col-xs-12 col-md-3">
+				<label class="col-xs-4 control-label">은행명</label>
+				<div class="col-xs-8"><input type="text" class="form-control" name="bank"></div>
+			</div>
+			<div class="form-group col-xs-12 col-md-3">
+				<label class="col-xs-4 control-label">예금주</label>
+				<div class="col-xs-8"><input type="text" class="form-control" name="name"></div>
+			</div>
+			<div class="form-group col-xs-12 col-md-2">
+				<input type="submit" class="btn btn-primary" value="등록"/>
+			</div>
+		</div>
 	}
 	
 	@form(action=routes.AccountApp.remove(), 'method -> "post", 'id -> "removeForm") {
 		<input type="hidden" id="del_accountNumber" name="accountNumber"/>
 	}
-	
-	<script type="text/javascript">
-		function removeAccount(accountNumber) {
-			if(!confirm(accountNumber + ' 계좌를 삭제할까요?')) {
-				return;
-			}
-			$('#del_accountNumber').val(accountNumber);
-			$('#removeForm').submit();
+</div>	
+<script type="text/javascript">
+	function removeAccount(accountNumber) {
+		if(!confirm(accountNumber + ' 계좌를 삭제할까요?')) {
+			return;
 		}
-	</script>
+		$('#del_accountNumber').val(accountNumber);
+		$('#removeForm').submit();
+	}
+</script>
 	
 	
 }

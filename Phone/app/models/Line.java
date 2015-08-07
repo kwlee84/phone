@@ -50,7 +50,6 @@ public class Line extends Model {
 	@Required
 	private Date dutyPeriodDate;
 	/** 해지일 */
-	@Required
 	private Date cancelDate;
 	/** PB 지급방식 */
 	private PayBackStyle payBackStyle;
@@ -78,6 +77,12 @@ public class Line extends Model {
 		return finder.all();
 	}
 	
+
+	public static List<Line> findByPerson(String personId) {
+		return finder.where().eq("person.id", personId).findList();
+	}
+	
+	
 	public static Line setUpdatedValues(String id, Line param) {
 		//
 		Line line = Line.find(id);
@@ -94,13 +99,18 @@ public class Line extends Model {
 		line.setPayBackStyle(param.getPayBackStyle());
 		line.setPayInstallmentYn(param.isPayInstallmentYn());
 		line.setUsim(param.getUsim());
+		if(line.getBusinessInfo() != null) {
+			line.setBusinessInfo(param.getBusinessInfo());
+		}
 		if(param.getAccount() == null || param.getAccount().getAccountNumber().isEmpty()) {
 			line.setAccount(null);
 		} else {
 			line.setAccount(param.getAccount());
 		}
+		if(param.getCaptureFile() != null) {
+			line.setCaptureFile(param.getCaptureFile());
+		}
 		//setBusinessInfo(param.businessInfo);
-		//setCaptureFile(param.getCaptureFile());
 		return line;
 	}
 	public String getId() {
@@ -211,5 +221,4 @@ public class Line extends Model {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
 }

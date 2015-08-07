@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.h2.util.StringUtils;
+
 import models.Account;
 import models.AttachedFile;
 import models.Line;
@@ -27,8 +29,16 @@ public class LineApp extends Controller {
 
 	
     public Result index() {
-    	List<Line> lines = Line.findAll();
-    	return ok(list.render(lines));
+    	DynamicForm requestData = Form.form().bindFromRequest();
+    	String personId = requestData.get("personId");
+    	List<Line> lines = null;
+    	if(StringUtils.isNullOrEmpty(personId)) {
+    		lines = Line.findAll();
+    	} else {
+    		lines = Line.findByPerson(personId);
+    	}
+    	List<Person> persons = Person.findAll();
+    	return ok(list.render(lines, persons, personId));
     }
     
     public Result registerForm() {

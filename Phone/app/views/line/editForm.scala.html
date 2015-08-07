@@ -2,49 +2,121 @@
 
 @import helper._
 
+@line = @{
+	lineForm.get
+}
 @main("Line Edit") {
-	<h3>Line Edit</h3>
-	@form(action=routes.LineApp.edit(), 'enctype -> "multipart/form-data") {
-		@inputText(lineForm("id"), 'type->"hidden")
-		<dl><dt>명의자</dt><dd>@lineForm.get.getPerson.getName</dd></dl>
-		@inputText(lineForm("number1"))
-		@inputText(lineForm("number2"))
-		@inputText(lineForm("number3"))
-		
-		@inputText(lineForm("usim"))
-		@inputDate(lineForm("joinDate"))
-		@inputDate(lineForm("keepPaySystemDate"))
-		@inputDate(lineForm("dutyPeriodDate"))
-		@inputDate(lineForm("cancelDate"))
-		<select name="payBackStyle">
-			@for(payBackStyle <- payBackStyles) {
-				<option value="@payBackStyle" @if(payBackStyle == lineForm.get.getPayBackStyle){selected}>@payBackStyle.getKrName</option>
-			}
-		</select>
-		@inputDate(lineForm("keepInstallmentDate"))
-		@inputDate(lineForm("payBackDate"))
-		@inputText(lineForm("businessInfo.costOfMaintenace"))
-		@inputText(lineForm("businessInfo.sellingPrice"))
-		
-		<select name="account.accountNumber">
-			<option value="">없음</option>
-			@if(lineForm.get.getAccount != null) {
-				@for(account <- accounts) {
-					<option value="@account.getAccountNumber" @if(account.getAccountNumber == lineForm.get.getAccount.getAccountNumber){selected}>@account.getAccountNumber : @account.getBank : @account.getName</option>
+<div class="container theme-showcase" role="main">
+	<div class="page-header">
+    	<h1>회선수정</h1>
+	</div>
+	<div class="col-md-9">
+	@form(action=routes.LineApp.edit(), 'enctype -> "multipart/form-data", 'class -> "form-horizontal") {
+		<input type="hidden" value="line.getId"/>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">명의자</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">@lineForm.get.getPerson.getName</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">전화번호</label>
+			<div class="row col-sm-9">
+  				<div class="col-sm-3"><input type="text" class="form-control"  name="number1" value="@line.getNumber1"></div>
+  				<div class="col-sm-0"><p>-</p></div>
+  				<div class="col-sm-4"><input type="text" class="form-control"  name="number2" value="@line.getNumber2"></div>
+  				<div class="col-sm-0"><p>-</p></div>
+  				<div class="col-sm-4"><input type="text" class="form-control" name="number3" value="@line.getNumber3"></div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">USIM</label>
+			<div class="col-sm-9">
+			<input type="text" class="form-control" name="usim" value="@line.getUsim">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">가입일</label>
+			<div class="col-sm-9">
+			<input type="date" class="form-control" name="joinDate" value="@line.getJoinDate.format("yyyy-MM-dd")">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">요금제변경가능일</label>
+			<div class="col-sm-9">
+			<input type="date" class="form-control" name="keepPaySystemDate" value="@line.getKeepPaySystemDate.format("yyyy-MM-dd")">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">해지가능일</label>
+			<div class="col-sm-9">
+			<input type="date" class="form-control" name="dutyPeriodDate" value="@line.getDutyPeriodDate.format("yyyy-MM-dd")">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">페이백방식</label>
+			<div class="col-sm-9">
+			<select class="form-control" name="payBackStyle">
+				@for(payBackStyle <- payBackStyles) {
+					<option value="@payBackStyle" @if(payBackStyle == lineForm.get.getPayBackStyle){selected}>@payBackStyle.getKrName</option>
 				}
-			} else {
-				@for(account <- accounts) {
-					<option value="@account.getAccountNumber">@account.getAccountNumber : @account.getBank : @account.getName</option>
-				}
-			}
 		</select>
-		
-		<input type="file" name="capture"/>
-		<input type="submit"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">할부금중도완납가능일</label>
+			<div class="col-sm-9">
+			<input type="date" class="form-control" name="keepInstallmentDate" value="@line.getKeepInstallmentDate.format("yyyy-MM-dd")">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">페이백예정일</label>
+			<div class="col-sm-9">
+			<input type="date" class="form-control" name="payBackDate" value="@line.getPayBackDate.format("yyyy-MM-dd")">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">유지비</label>
+			<div class="col-sm-9">
+			<input type="text" class="form-control" name="businessInfo.costOfMaintenace" value="@line.getBusinessInfo.getCostOfMaintenace">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">판매가</label>
+			<div class="col-sm-9">
+			<input type="text" class="form-control" name="businessInfo.sellingPrice" value="@line.getBusinessInfo.getSellingPrice">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">납부계좌</label>
+			<div class="col-sm-9">
+				<select class="form-control" name="account.accountNumber">
+					<option value="">없음</option>
+					@if(lineForm.get.getAccount != null) {
+						@for(account <- accounts) {
+							<option value="@account.getAccountNumber" @if(account.getAccountNumber == lineForm.get.getAccount.getAccountNumber){selected}>@account.getAccountNumber : @account.getBank : @account.getName</option>
+						}
+					} else {
+						@for(account <- accounts) {
+							<option value="@account.getAccountNumber">@account.getAccountNumber : @account.getBank : @account.getName</option>
+						}
+					}
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="exampleInputFile" class="col-sm-3 control-label">조건캡쳐파일</label>
+			<div class="col-sm-9">
+				<input type="file" name="capture" value=""/>
+			</div>
+		</div>
+		<input type="submit" value="저장" class="btn btn-primary"/>
+		<a href="@routes.LineApp.show(line.getId)" class="btn btn-default">취소</a>
 	}
-	
-	<script type="text/javascript">
-	</script>
-	
+	</div>
+</div>
+<script type="text/javascript">
+</script>
+		
 	
 }

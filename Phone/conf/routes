@@ -22,6 +22,7 @@ POST    /line/delete				controllers.LineApp.remove()
 
 GET     /login						controllers.LoginApp.loginForm()
 POST    /login						controllers.LoginApp.login()
+GET     /template					controllers.LoginApp.template()
 
 GET     /logout						controllers.LoginApp.logout()
 
