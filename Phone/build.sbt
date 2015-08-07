@@ -6,7 +6,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
 scalaVersion := "2.11.6"
 
-resolvers += "Local Maven Repository" at "file:///Users/kiwanglee/Documents/Project/Phone/repository"
+//resolvers += "Local Maven Repository" at "file:/D:/Project/Phone/Repository"
 
 libraryDependencies ++= Seq(
   javaJdbc,
