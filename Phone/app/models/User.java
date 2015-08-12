@@ -25,7 +25,7 @@ public class User extends Model {
 	private String password;
 	private String name;
 	private String authToken;
-	/*private byte[] shaPassword;
+	private byte[] shaPassword;
 	
 	private static byte[] getSha512(String value) {
         try {
@@ -115,6 +115,6 @@ public class User extends Model {
 	}
 	public void setShaPassword(byte[] shaPassword) {
 		this.shaPassword = shaPassword;
-	}*/
+	}
 
 }
