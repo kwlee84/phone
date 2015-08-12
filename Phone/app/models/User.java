@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 import com.avaje.ebean.Model;
 
 @Entity
-@Table(name="ADMIN_USER")
+@Table(name="admin_user")
 public class User extends Model {
 	
 	private static Finder<String, User> finder = new Finder<String, User>(User.class);
