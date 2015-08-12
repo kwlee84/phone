@@ -13,7 +13,7 @@ import play.mvc.*;
 import play.mvc.Security.Authenticated;
 import views.html.person.*;
 
-@Authenticated(Secured.class)
+//@Authenticated(Secured.class)
 public class PersonApp extends Controller {
 	//
     public Result index() {
