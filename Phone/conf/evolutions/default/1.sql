@@ -61,7 +61,7 @@ create table admin_user (
   email                     varchar(255) not null,
   name                      varchar(255),
   auth_token                varchar(255),
-  sha_password              BYTEA,
+  sha_password              bit(255),
   constraint uq_admin_user_email unique (email),
   constraint pk_admin_user primary key (id))
 ;
