@@ -8,11 +8,13 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.avaje.ebean.Model;
 
 @Entity
+@Table(name="admin_user")
 public class User extends Model {
 	
 	private static Finder<String, User> finder = new Finder<String, User>(User.class);
