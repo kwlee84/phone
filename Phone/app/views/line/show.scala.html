@@ -12,19 +12,19 @@
 			<dt>명의자</dt><dd>@line.getPerson.getName</dd>
 			<dt>전화번호</dt><dd>@line.getNumber1-@line.getNumber2-@line.getNumber3</dd>
 			<dt>유심번호</dt><dd>@line.getUsim</dd>
-			<dt>가입일</dt><dd>@line.getJoinDate</dd>
+			<dt>가입일</dt><dd>@if(line.getJoinDate!=null){@line.getJoinDate.format("yyyy-MM-dd")}</dd>
 			<dt>요금제변경가능일</dt>
-			<dd>@line.getKeepPaySystemDate</dd>
+			<dd>@if(line.getKeepPaySystemDate!=null){@line.getKeepPaySystemDate.format("yyyy-MM-dd")}</dd>
 			<dt>해지가능일</dt>
-			<dd>@line.getDutyPeriodDate</dd>
+			<dd>@if(line.getDutyPeriodDate!=null){@line.getDutyPeriodDate.format("yyyy-MM-dd")}</dd>
 			<dt>해지일</dt>
-			<dd>@line.getCancelDate</dd>
+			<dd>@if(line.getCancelDate!=null){@line.getCancelDate.format("yyyy-MM-dd")}</dd>
 			<dt>PB 지급방식</dt>
 			<dd>@line.getPayBackStyle.getKrName</dd>
 			<dt>할부중도완납가능일</dt>
-			<dd>@line.getKeepInstallmentDate</dd>
+			<dd>@if(line.getKeepInstallmentDate!=null){@line.getKeepInstallmentDate.format("yyyy-MM-dd")}</dd>
 			<dt>PB 입금예정일</dt>
-			<dd>@line.getPayBackDate</dd>
+			<dd>@if(line.getPayBackDate!=null){@line.getPayBackDate.format("yyyy-MM-dd")}</dd>
 			<dt>할부금 완납여부</dt>
 			<dd>@line.isPayInstallmentYn</dd>
 			<dt>PB 확인여부</dt>
