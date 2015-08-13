@@ -56,6 +56,12 @@ create table person (
   constraint pk_person primary key (id))
 ;
 
+create table sequence (
+  sequence_name             varchar(255) not null,
+  next_sequence             bigint,
+  constraint uq_sequence_sequence_name unique (sequence_name))
+;
+
 create table admin_user (
   id                        varchar(255) not null,
   email                     varchar(255) not null,
@@ -88,6 +94,8 @@ drop table if exists business cascade;
 drop table if exists line cascade;
 
 drop table if exists person cascade;
+
+drop table if exists sequence cascade;
 
 drop table if exists admin_user cascade;
 
