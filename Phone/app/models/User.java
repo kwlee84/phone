@@ -27,13 +27,11 @@ public class User extends Model {
 	private String password;
 	private String name;
 	private String authToken;
-	private String shaPassword;
+	private byte[] shaPassword;
 	
-	private static String getSha512(String value) {
+	private static byte[] getSha512(String value) {
         try {
-        	MessageDigest.getInstance("SHA-512").digest(value.getBytes("UTF-8"));
-            //return MessageDigest.getInstance("SHA-512").digest(value.getBytes("UTF-8"));
-        	return value;
+        	return MessageDigest.getInstance("SHA-512").digest(value.getBytes("UTF-8"));
         }
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
@@ -114,10 +112,10 @@ public class User extends Model {
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
 	}
-	public String getShaPassword() {
+	public byte[] getShaPassword() {
 		return shaPassword;
 	}
-	public void setShaPassword(String shaPassword) {
+	public void setShaPassword(byte[] shaPassword) {
 		this.shaPassword = shaPassword;
 	}
 
