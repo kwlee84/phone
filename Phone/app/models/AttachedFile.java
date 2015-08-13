@@ -1,7 +1,11 @@
 package models;
 
+import java.io.File;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import org.apache.commons.io.FileUtils;
 
 import com.avaje.ebean.Model;
 
@@ -25,6 +29,10 @@ public class AttachedFile extends Model {
 	
 	public static AttachedFile find(String id) {
 		return finder.byId(id);
+	}
+	public void deleteAttechedFile() {
+		FileUtils.deleteQuietly(new File(this.path));
+		delete();
 	}
 	public String getId() {
 		return id;

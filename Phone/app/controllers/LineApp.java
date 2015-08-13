@@ -117,13 +117,11 @@ public class LineApp extends Controller {
     	DynamicForm bindedForm = Form.form().bindFromRequest();
     	String lineId = bindedForm.get("lineId");
     	String attachedFileId = bindedForm.get("attachedFileId");
-    	System.out.println(lineId + " / " + attachedFileId);
     	Line line = Line.find(lineId);
     	line.setCaptureFile(null);
     	line.update();
     	AttachedFile attachedFile = AttachedFile.find(attachedFileId);
-    	FileUtils.deleteQuietly(new File(attachedFile.getPath()));
-    	attachedFile.delete();
+    	attachedFile.deleteAttechedFile();
     	
     	return ok(Json.toJson("ok"));
     }
