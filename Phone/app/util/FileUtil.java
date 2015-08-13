@@ -15,7 +15,7 @@ public class FileUtil {
 	public static File saveFile(File fromFile) {
 		//
 		//String path = Play.application().configuration().getString("fileUploadPath");
-		String path = Play.application().path().getPath() + "\\data\\file\\";
+		String path = Play.application().path().getPath() + File.separator + "data"+ File.separator +"file" + File.separator;
 		File toFile = new File(path + DateFormatUtils.format(new Date(),"yyyyMMdd"), String.valueOf(System.currentTimeMillis()));
 		try {
 			FileUtils.moveFile(fromFile, toFile);
