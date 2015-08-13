@@ -19,6 +19,7 @@ GET     /line/:id					controllers.LineApp.show(id)
 GET     /line/:id/edit				controllers.LineApp.editForm(id)
 POST    /line/edit					controllers.LineApp.edit()
 POST    /line/delete				controllers.LineApp.remove()
+POST    /line/filedelete			controllers.LineApp.removeAttachedFile()
 
 GET     /login						controllers.LoginApp.loginForm()
 POST    /login						controllers.LoginApp.login()

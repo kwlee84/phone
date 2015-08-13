@@ -8,6 +8,8 @@ import com.avaje.ebean.Model;
 @Entity
 public class AttachedFile extends Model {
 	//
+	private static Finder<String, AttachedFile> finder = new Finder<String, AttachedFile>(AttachedFile.class);
+	
     @Id
     private String id;
 	private String path;
@@ -21,6 +23,9 @@ public class AttachedFile extends Model {
 		this.contentType = contentType;
 	}
 	
+	public static AttachedFile find(String id) {
+		return finder.byId(id);
+	}
 	public String getId() {
 		return id;
 	}

@@ -108,7 +108,15 @@ public class Line extends Model {
 			line.setAccount(param.getAccount());
 		}
 		if(param.getCaptureFile() != null) {
+			param.getCaptureFile().insert();
 			line.setCaptureFile(param.getCaptureFile());
+		}
+		if(line.getBusinessInfo() == null) {
+			param.getBusinessInfo().insert();
+			line.setBusinessInfo(param.getBusinessInfo());
+		} else {
+			line.getBusinessInfo().setCostOfMaintenace(param.getBusinessInfo().getCostOfMaintenace());
+			line.getBusinessInfo().setSellingPrice(param.getBusinessInfo().getSellingPrice());
 		}
 		//setBusinessInfo(param.businessInfo);
 		return line;

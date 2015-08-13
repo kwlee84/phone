@@ -5,6 +5,15 @@
 @line = @{
 	lineForm.get
 }
+
+@captureFileId = @{
+	if(lineForm.get.getCaptureFile != null) {
+		lineForm.get.getCaptureFile.getId
+	} else {
+		null
+	}
+}
+
 @main("Line Edit") {
 <div class="container theme-showcase" role="main">
 	<div class="page-header">
@@ -12,7 +21,7 @@
 	</div>
 	<div class="col-md-9">
 	@form(action=routes.LineApp.edit(), 'enctype -> "multipart/form-data", 'class -> "form-horizontal") {
-		<input type="hidden" value="line.getId"/>
+		<input type="hidden" name="id" value="@line.getId"/>
 		<div class="form-group">
 			<label class="col-sm-3 control-label">명의자</label>
 			<div class="col-sm-9">
@@ -106,16 +115,59 @@
 		</div>
 		<div class="form-group">
 			<label for="exampleInputFile" class="col-sm-3 control-label">조건캡쳐파일</label>
-			<div class="col-sm-9">
-				<input type="file" name="capture" value=""/>
+			<div id="div_attachedFile" class="col-sm-9">
+				@if(line.getCaptureFile != null){
+					<p class="form-control-static">
+						@line.getCaptureFile.getFileName 
+						<a href="javascript:removeFile();" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color:red"></span></a>
+					</p>
+				} else {
+					<input type="file" name="capture" class="file" data-show-upload="false"/>
+				}
 			</div>
 		</div>
 		<input type="submit" value="저장" class="btn btn-primary"/>
 		<a href="@routes.LineApp.show(line.getId)" class="btn btn-default">취소</a>
 	}
 	</div>
+	
 </div>
+
+<div id="file_template" style="display:none">
+	<input type="file" name="capture" class="file" data-show-upload="false"/>
+</div>
+<div id="remove_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				<span>첨부파일을 삭제하시겠습니까?</span>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-danger" onclick="removeFile()">삭제</button>
+			</div>    
+		</div>
+	</div>
+</div>
+
+
 <script type="text/javascript">
+	function removeFile() {
+		$.ajax({
+			  url: '@routes.LineApp.removeAttachedFile()',
+			  type : 'post',
+			  data: {
+				  lineId : '@line.getId',
+				  attachedFileId : '@captureFileId'
+			  },
+			  dataType : 'Json'
+		}).done(function(data) {
+			$('#remove_modal').modal('hide');
+			$('#div_attachedFile').empty();
+			$('#div_attachedFile').append($('#file_template').children());
+		}).fail(function(){
+		});
+	}
 </script>
 		
 	
