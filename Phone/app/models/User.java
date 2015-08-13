@@ -31,7 +31,9 @@ public class User extends Model {
 	
 	private static String getSha512(String value) {
         try {
-            return MessageDigest.getInstance("SHA-512").digest(value.getBytes("UTF-8")).toString();
+        	MessageDigest.getInstance("SHA-512").digest(value.getBytes("UTF-8"));
+            //return MessageDigest.getInstance("SHA-512").digest(value.getBytes("UTF-8"));
+        	return value;
         }
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
