@@ -24,7 +24,6 @@ import util.FileUtil;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model.Finder;
-import com.sun.media.jfxmedia.logging.Logger;
 
 import views.html.line.*;
 
