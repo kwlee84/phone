@@ -11,6 +11,7 @@ import models.AttachedFile;
 import models.Line;
 import models.PayBackStyle;
 import models.Person;
+import models.Sequence;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -55,8 +56,11 @@ public class LineApp extends Controller {
     	if (filePart != null) {
     		File file = FileUtil.saveFile(filePart.getFile());
     		AttachedFile captureFile = new AttachedFile(file.getPath(), filePart.getFilename(), filePart.getContentType());
+    		captureFile.setId(String.valueOf(Sequence.getSequence(Sequence.ATTACHED_FILE)));
     		line.setCaptureFile(captureFile);
     	}
+    	line.getBusinessInfo().setId(String.valueOf(Sequence.getSequence(Sequence.BUSINESS)));
+    	line.setId(String.valueOf(Sequence.getSequence(Sequence.LINE)));
     	line.insert();
     	
         return redirect(routes.LineApp.index());

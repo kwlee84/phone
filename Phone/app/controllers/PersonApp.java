@@ -6,6 +6,7 @@ import com.avaje.ebean.Model.Finder;
 
 import models.Account;
 import models.Person;
+import models.Sequence;
 import play.*;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -34,6 +35,7 @@ public class PersonApp extends Controller {
 		}
     	
     	Person person = personForm.get();
+    	person.setId(String.valueOf(Sequence.getSequence(Sequence.PERSON)));
     	person.insert();
     	
     	return redirect(routes.PersonApp.index());
