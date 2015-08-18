@@ -22,6 +22,7 @@
 	<div class="col-md-9">
 	@form(action=routes.LineApp.edit(), 'enctype -> "multipart/form-data", 'class -> "form-horizontal") {
 		<input type="hidden" name="id" value="@line.getId"/>
+		<input type="hidden" class="form-control" name="businessInfo.id" value="@line.getBusinessInfo.getId">
 		<div class="form-group">
 			<label class="col-sm-3 control-label">명의자</label>
 			<div class="col-sm-9">
