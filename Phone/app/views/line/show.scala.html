@@ -42,7 +42,8 @@
 			<dt>조건캡쳐</dt>
 			<dd>
 				@if(line.getCaptureFile != null) {
-					<img alt="" src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)" width="20%" height="20%">
+					<a href="@routes.AttachedFileApp.download(line.getCaptureFile.getId)">@line.getCaptureFile.getFileName</a>
+					<button type="button" class="btn btn-xs btn-danger pop" data-src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)">미리보기</button>
 				}
 			</dd>
 		</dl>
@@ -65,8 +66,22 @@
 		</div>
 	</div>
 </div>	
-	
-	
+
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" data-dismiss="modal">
+    <div class="modal-content"  >              
+      <div class="modal-body">
+      	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <img src="" class="imagepreview" style="width:100%">
+      </div> 
+      <!-- <div class="modal-footer">
+          <div class="col-xs-12">
+               <p class="text-left">1. line of description<br>2. line of description <br>3. line of description</p>
+          </div>
+      </div> -->
+    </div>
+  </div>
+</div>
 	
 	@form(action=routes.LineApp.remove(), 'method->"post", 'id->"removeForm") {
 		<input type="hidden" name="id" value="@line.getId">
@@ -76,6 +91,13 @@
 		function removeLine() {
 			$('#removeForm').submit();
 		}
+		
+		$(function() {
+			$('.pop').on('click', function() {
+				$('.imagepreview').attr('src', $(this).attr('data-src'));
+				$('#imagemodal').modal('show');
+			});		
+	});
 	</script>
 	
 	
