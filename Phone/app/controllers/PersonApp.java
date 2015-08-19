@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import com.avaje.ebean.Model.Finder;
+import com.avaje.ebean.annotation.Transactional;
 
 import models.Account;
 import models.Person;
@@ -25,6 +26,7 @@ public class PersonApp extends Controller {
         return ok(list.render(persons, personForm));
     }
     
+    @Transactional
     public Result register() {
     	//
     	Form<Person> personForm = Form.form(Person.class).bindFromRequest();
@@ -41,6 +43,7 @@ public class PersonApp extends Controller {
     	return redirect(routes.PersonApp.index());
     }
 
+    @Transactional
     public Result remove() {
     	//
     	DynamicForm requestData = Form.form().bindFromRequest();

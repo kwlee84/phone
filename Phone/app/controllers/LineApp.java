@@ -24,6 +24,7 @@ import util.FileUtil;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model.Finder;
+import com.avaje.ebean.annotation.Transactional;
 
 import views.html.line.*;
 
@@ -52,6 +53,7 @@ public class LineApp extends Controller {
         return ok(newForm.render(accounts, lineForm, payBackStyles, persons));
     }
     
+    @Transactional
     public Result register() {
 		Line line = Form.form(Line.class).bindFromRequest().get();
     	FilePart filePart = request().body().asMultipartFormData().getFile("capture");
@@ -85,6 +87,7 @@ public class LineApp extends Controller {
     	return ok(editForm.render(lineForm, accounts, payBackStyles));
     }
     
+    @Transactional
     public Result edit() {
     	Line line = Form.form(Line.class).bindFromRequest().get();
     	FilePart filePart = request().body().asMultipartFormData().getFile("capture");
@@ -99,6 +102,7 @@ public class LineApp extends Controller {
     	return redirect(routes.LineApp.show(line.getId()));
     }
     
+    @Transactional
     public Result remove() {
     	DynamicForm requestData = Form.form().bindFromRequest();
     	String id = requestData.get("id");
@@ -112,6 +116,7 @@ public class LineApp extends Controller {
     	return redirect(routes.LineApp.index());
     }
 
+    @Transactional
     public Result removeAttachedFile() {
     	DynamicForm bindedForm = Form.form().bindFromRequest();
     	String lineId = bindedForm.get("lineId");

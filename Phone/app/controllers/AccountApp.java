@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import com.avaje.ebean.Model.Finder;
+import com.avaje.ebean.annotation.Transactional;
 
 import models.Account;
 import play.*;
@@ -23,6 +24,7 @@ public class AccountApp extends Controller {
         return ok(list.render(accounts, userForm));
     }
     
+    @Transactional
     public Result register() {
     	//
     	Form<Account> accountForm = Form.form(Account.class).bindFromRequest();
@@ -37,7 +39,8 @@ public class AccountApp extends Controller {
     	
     	return redirect(routes.AccountApp.index());
     }
-
+    
+    @Transactional
     public Result remove() {
     	//
     	DynamicForm requestData = Form.form().bindFromRequest();
