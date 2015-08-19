@@ -43,7 +43,7 @@
 			<dd>
 				@if(line.getCaptureFile != null) {
 					<a href="@routes.AttachedFileApp.download(line.getCaptureFile.getId)">@line.getCaptureFile.getFileName</a>
-					<button type="button" class="btn btn-xs btn-danger pop" data-src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)">미리보기</button>
+					<button type="button" class="btn btn-xs btn-default pop" data-src="@routes.AttachedFileApp.download(line.getCaptureFile.getId)">미리보기</button>
 				}
 			</dd>
 		</dl>
