@@ -111,11 +111,7 @@ public class LineApp extends Controller {
     	
     	return redirect(routes.LineApp.index());
     }
-    /**
-     * TODO 
-     * 회선 검색기능
-     * 첨부파일 수정기능
-     */
+
     public Result removeAttachedFile() {
     	DynamicForm bindedForm = Form.form().bindFromRequest();
     	String lineId = bindedForm.get("lineId");
