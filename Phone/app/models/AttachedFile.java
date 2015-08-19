@@ -30,9 +30,9 @@ public class AttachedFile extends Model {
 	public static AttachedFile find(String id) {
 		return finder.byId(id);
 	}
-	public void deleteAttechedFile() {
+	public void delete() {
 		FileUtils.deleteQuietly(new File(this.path));
-		delete();
+		super.delete();
 	}
 	public String getId() {
 		return id;

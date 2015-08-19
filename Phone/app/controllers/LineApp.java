@@ -103,7 +103,11 @@ public class LineApp extends Controller {
     	DynamicForm requestData = Form.form().bindFromRequest();
     	String id = requestData.get("id");
     	
-    	Line.find(id).delete();
+    	Line line = Line.find(id);
+    	if(line.getCaptureFile() != null) {
+    		FileUtils.deleteQuietly(new File(line.getCaptureFile().getPath()));
+    	}
+    	line.delete();
     	
     	return redirect(routes.LineApp.index());
     }
@@ -119,8 +123,7 @@ public class LineApp extends Controller {
     	Line line = Line.find(lineId);
     	line.setCaptureFile(null);
     	line.update();
-    	AttachedFile attachedFile = AttachedFile.find(attachedFileId);
-    	attachedFile.deleteAttechedFile();
+    	AttachedFile.find(attachedFileId).delete();
     	
     	return ok(Json.toJson("ok"));
     }
