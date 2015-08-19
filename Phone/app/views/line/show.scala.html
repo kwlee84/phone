@@ -83,22 +83,22 @@
   </div>
 </div>
 	
-	@form(action=routes.LineApp.remove(), 'method->"post", 'id->"removeForm") {
-		<input type="hidden" name="id" value="@line.getId">
+@form(action=routes.LineApp.remove(), 'method->"post", 'id->"removeForm") {
+	<input type="hidden" name="id" value="@line.getId">
+}
+	
+<script type="text/javascript">
+	function removeLine() {
+		$('#removeForm').submit();
 	}
 	
-	<script type="text/javascript">
-		function removeLine() {
-			$('#removeForm').submit();
-		}
-		
-		$(function() {
-			$('.pop').on('click', function() {
-				$('.imagepreview').attr('src', $(this).attr('data-src'));
-				$('#imagemodal').modal('show');
-			});		
+	$(function() {
+		$('.pop').on('click', function() {
+			$('.imagepreview').attr('src', $(this).attr('data-src'));
+			$('#imagemodal').modal('show');
+		});		
 	});
-	</script>
+</script>
 	
 	
 }
