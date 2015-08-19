@@ -23,13 +23,16 @@
 						<td>@account.getAccountNumber</td>
 						<td>@account.getBank</td>
 						<td>@account.getName</td>
-						<td><input class="btn btn-xs btn-danger" type="button" value="삭제" onclick="removeAccount('@account.getAccountNumber')"/></td>
+						<td>
+							<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#remove_modal" data-whatever="@account.getAccountNumber">삭제</button>
+						</td>
 					</tr>
 				}
 			</tbody>
 		</table><br>
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#register_modal">등록</button>
 	</div>
+	
 	<div id="register_modal" class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -60,16 +63,29 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<div id="remove_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<!-- <span>계좌를 삭제하시겠습니까?</span> -->
+					<h4 class="modal-title" id="exampleModalLabel">계좌를 삭제하시겠습니까?</h4>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-danger" onclick="removeAccount()">삭제</button>
+				</div>    
+			</div>
+		</div>
+	</div>
 	@form(action=routes.AccountApp.remove(), 'method -> "post", 'id -> "removeForm") {
 		<input type="hidden" id="del_accountNumber" name="accountNumber"/>
 	}
 </div>	
 <script type="text/javascript">
-	function removeAccount(accountNumber) {
-		if(!confirm(accountNumber + ' 계좌를 삭제할까요?')) {
-			return;
-		}
+	var accountNumber = null;
+	
+	function removeAccount() {
 		$('#del_accountNumber').val(accountNumber);
 		$('#removeForm').submit();
 	}
@@ -77,6 +93,17 @@
 	function registerAccount() {
 		$('#register_form').submit();
 	}
+	
+	$(function(){
+		$('#remove_modal').on('show.bs.modal', function (event) {
+		  var button = $(event.relatedTarget);
+		  var recipient = button.data('whatever');
+		  var modal = $(this);
+		  accountNumber = recipient;
+		  modal.find('.modal-title').text(recipient + ' 계좌를 삭제할까요?');
+		});
+	});
+	
 </script>
 	
 	

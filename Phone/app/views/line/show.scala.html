@@ -48,11 +48,23 @@
 		</dl>
 		<a type="button" class="btn btn-default" href="@routes.LineApp.index()">목록</a>
 		<a type="button" class="btn btn-primary" href="@routes.LineApp.editForm(line.getId)">수정</a>
-		<a type="button" class="btn btn-danger" href="javascript:removeLine()">삭제</a>
+		<a type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-sm">삭제</a>
 		
 	</div>
 </div>
-	
+<div id="remove_modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4>회선을 삭제하시겠습니까?</h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-danger" onclick="removeLine()">삭제</button>
+			</div>    
+		</div>
+	</div>
+</div>	
 	
 	
 	
@@ -62,9 +74,6 @@
 	
 	<script type="text/javascript">
 		function removeLine() {
-			if(!confirm('회선을 삭제할까요?')) {
-				return;
-			}
 			$('#removeForm').submit();
 		}
 	</script>
